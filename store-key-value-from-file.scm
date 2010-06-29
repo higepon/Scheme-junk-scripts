@@ -24,12 +24,12 @@
                             (match x
                               [(my-index line*)
                                 (let1 mc (memcached-connect (if (even? my-index) "10.12.0.2" "10.12.0.3") "11211")
-                                  (format #t "<~d> started\n" i)
+                                  (format #t "<~d> started\n" my-index)
                                   (for-each
                                    (^l
                                     (memcached-set! mc (car l) 0 0 (cdr l)))
                                    line*)
-                                  (format #t "<~d> end\n" i))]))
+                                  (format #t "<~d> end\n" my-index))]))
                            (list i line*)
-                           '((rnrs) (mosh concurrent) (memcached) (mosh control) (shorten) (match)))
+                           '((rnrs) (mosh concurrent) (memcached) (mosh control) (shorten) (match) (mosh)))
             (loop tail (+ i 1) (cons pid pid*)))]))))
