@@ -20,6 +20,6 @@
        (cond
         [(hashtable-ref ht zipcode) '()]
         [else
-         (format #t "(~a ~a)\n" zipcode address)
+         (format #t "(~s ~s)\n" zipcode address)
          (hashtable-set! ht zipcode #t)])))
    line*))
