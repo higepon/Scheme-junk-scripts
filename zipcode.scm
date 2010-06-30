@@ -11,7 +11,7 @@
   (read (open-string-input-port x)))
 
 (let ([line* (file->list "/home/taro/Downloads/ken_all.csv")]
-      [ht (make-eqv-hashtable)])
+      [ht (make-hashtable string-hash string=?)])
   (for-each
    (^(line)
      (let* ([x (string-split line #\,)]

@@ -11,7 +11,8 @@
         [line* (map (^x (read (open-string-input-port x))) (file->list "/home/taro/Desktop/zipcode.sexp"))])
     (for-each
      (^l
-      (test-eqv (cadr l) (memcached-get mc (car l))))
-     line*)))
+      (test-equal (cadr l) (car (memcached-get mc (car l)))))
+     line*))
+  (test-results))
 
 (main (command-line))
