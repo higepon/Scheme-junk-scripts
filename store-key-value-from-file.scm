@@ -23,7 +23,7 @@
           (let1 pid (spawn (^x
                             (match x
                               [(my-index line*)
-                                (let1 mc (memcached-connect (if (even? my-index) "10.12.0.2" "10.12.0.3") "11211")
+                                (let1 mc (memcached-connect (vector-ref '#("10.12.0.2" "10.12.0.3" "10.12.0.16" "10.12.0.20") (mod my-index 4)) "11211")
                                   (format #t "<~d> started\n" my-index)
                                   (for-each
                                    (^l
