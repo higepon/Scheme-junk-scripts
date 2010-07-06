@@ -27,7 +27,7 @@
                                   (format #t "<~d> started\n" my-index)
                                   (for-each
                                    (^l
-                                    (memcached-set! mc (car l) 0 0 (cdr l)))
+                                    (memcached-set! mc (car l) 0 (* 60 60 5) (cdr l)))
                                    line*)
                                   (format #t "<~d> end\n" my-index))]))
                            (list i line*)
