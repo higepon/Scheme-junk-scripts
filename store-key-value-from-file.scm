@@ -10,9 +10,10 @@
         (mosh))
 
 (define *data-file* "/home/taro/Desktop/zipcode.sexp")
-(define *number-of-processes* 15)
+(define *number-of-processes* 3)
 (define *unit-size* 500)
-(define *hosts* '#("10.12.4.40" "10.12.4.41")); "10.12.4.42" "10.12.4.43" "10.12.4.44"
+(define *hosts* '#("10.12.4.40" "10.12.4.41" "10.12.4.42" "10.12.4.43"))
+; "10.12.4.42" "10.12.4.43" "10.12.4.44"
 ;                   "10.12.4.45" "10.12.4.46" "10.12.4.47" "10.12.4.48" "10.12.4.49"))
 
 
@@ -49,17 +50,19 @@
          '((srfi :27) (rnrs) (mosh concurrent) (memcached) (mosh control) (shorten) (match) (mosh))))
 
 
-(let* ([lines (map (^x (read (open-string-input-port x))) (file->list *data-file*))]
-       [lines-count-per-process (div (length lines) *number-of-processes*)])
-  (let loop ([line* lines]
-             [pid* '()])
-    (cond
-     [(null? line*)
-      (for-each join! pid*)
-      (display "done")
-      (newline)]
-     [else
-      (let-values (([head tail] (if (< (length line*) lines-count-per-process) (values line* '()) (split-at! line* lines-count-per-process))))
-        (let1 pid (start-worker *hosts* head)
-          (loop tail (cons pid pid*))))])))
+(define (main args)
+  (let* ([lines (map (^x (read (open-string-input-port x))) (file->list (cadr args)))]
+         [lines-count-per-process (div (length lines) *number-of-processes*)])
+    (let loop ([line* lines]
+               [pid* '()])
+      (cond
+       [(null? line*)
+        (for-each join! pid*)
+        (display "done")
+        (newline)]
+       [else
+        (let-values (([head tail] (if (< (length line*) lines-count-per-process) (values line* '()) (split-at! line* lines-count-per-process))))
+          (let1 pid (start-worker *hosts* head)
+            (loop tail (cons pid pid*))))]))))
 
+(main (command-line))
