@@ -10,10 +10,10 @@
         (mosh))
 
 (define *data-file* "/home/taro/Desktop/zipcode.sexp")
-(define *number-of-processes* 3)
+(define *number-of-processes* 15)
 (define *unit-size* 500)
-(define *hosts* '#("10.12.4.40" "10.12.4.41" "10.12.4.42" "10.12.4.43" "10.12.4.44"
-                   "10.12.4.45" "10.12.4.46" "10.12.4.47" "10.12.4.48" "10.12.4.49"))
+(define *hosts* '#("10.12.4.40" "10.12.4.41")); "10.12.4.42" "10.12.4.43" "10.12.4.44"
+;                   "10.12.4.45" "10.12.4.46" "10.12.4.47" "10.12.4.48" "10.12.4.49"))
 
 
 (define (start-worker host* line*)
